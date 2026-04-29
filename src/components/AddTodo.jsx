@@ -7,6 +7,8 @@ export default function AddTodo({onAdd}){
         todoTitle:""
     })
 
+    const [error, setError] = useState(false)
+
     const handleChange= (e)=>{
 
         const {name, value} = e.target 
@@ -18,7 +20,7 @@ export default function AddTodo({onAdd}){
         e.preventDefault()
 
         if(!form.todoTitle.trim()) {
-            alert("there is no input")
+            setError(true)
             return
         }
 
@@ -31,6 +33,7 @@ export default function AddTodo({onAdd}){
         onAdd(newTodo)
 
         setForm({todoTitle:""})
+        setError(false)
     }
 
      return (
@@ -47,7 +50,10 @@ export default function AddTodo({onAdd}){
             <button className="btn btn-success" type="submit">
             Add
             </button>
+
         </div>
+            {error && <p className="text-danger">you should fill in smth</p>}
+
         </form>
     )
 }
