@@ -1,0 +1,35 @@
+{
+  "todos": [
+    {
+      "id": "1",
+      "title": "Learn React basics",
+      "completed": false
+    },
+    {
+      "id": "2",
+      "title": "Build a Todo app",
+      "completed": false
+    },
+    {
+      "id": "3",
+      "title": "Study TypeScript",
+      "completed": false
+    },
+    {
+      "id": "4",
+      "title": "Go to the gym",
+      "completed": false
+    },
+    {
+      "id": "5",
+      "title": "Read a book",
+      "completed": false
+    },
+    {
+      "title": "vvj",
+      "completed": true,
+      "id": "iXmxW3UEXFE"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}

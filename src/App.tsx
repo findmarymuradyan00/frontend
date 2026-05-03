@@ -1,11 +1,12 @@
 import TodoList from "./components/TodoList";
 
-export default function App(){
+
+export default function App() {
 
 
-  return (
+  return(
     <>
-      <TodoList/>
+    <TodoList />
     </>
   )
 }
