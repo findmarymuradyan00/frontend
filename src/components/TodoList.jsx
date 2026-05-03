@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import axios from "axios";
 import List from "./List";
 import AddTodo from "./AddTodo";
 
@@ -6,19 +7,19 @@ export default function TodoList() {
   const [todos, setTodos] = useState([]);
 
   useEffect(() => {
-    fetch("https://jsonplaceholder.typicode.com/todos")
-      .then((response) => response.json())
-      .then((data) => {
-        const dataModified = data.map((d) => ({
-          id: d.id,
-          title: d.title,
-          completed: d.completed,
-        }));
+  axios
+    .get("http://localhost:4001/todos")
+    .then((response) => {
+      const dataModified = response.data.map((d) => ({
+        id: d.id,
+        title: d.title,
+        completed: d.completed,
+      }));
 
-        setTodos(dataModified);
-      })
-      .catch((err) => console.error(err));
-  }, []);
+      setTodos(dataModified);
+    })
+    .catch((err) => console.error(err));
+}, []);
 
 
   const handleAddTodo = (newTodo) => {

@@ -1,59 +1,58 @@
-import { useState } from "react"
+import { useState } from "react";
 
-export default function AddTodo({onAdd}){
+export default function AddTodo({ onAdd }) {
+  const [form, setForm] = useState({
+    todoTitle: "",
+  });
 
+  const [error, setError] = useState(false);
 
-    const [form, setForm] = useState({
-        todoTitle:""
-    })
+  const handleChange = (e) => {
+    const { name, value } = e.target;
 
-    const [error, setError] = useState(false)
+    setForm({ ...form, [name]: value });
+  };
 
-    const handleChange= (e)=>{
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-        const {name, value} = e.target 
-
-        setForm({...form, [name]:value})
+    if (!form.todoTitle.trim()) {
+      setError(true);
+      return;
     }
 
-    const handleSubmit = (e) =>{
-        e.preventDefault()
+    const newTodo = {
+      id: Date.now(),
+      title: form.todoTitle,
+      completed: false,
+    };
 
-        if(!form.todoTitle.trim()) {
-            setError(true)
-            return
-        }
+    axios
+      .post("https://jsonplaceholder.typicode.com/todos", newTodo)
+      .then((res) => {
+        onAdd(res.data);
+      });
 
-        const newTodo = {
-            id: Date.now(),
-            title:form.todoTitle,
-            completed:false
-        }
+    setForm({ todoTitle: "" });
+    setError(false);
+  };
 
-        onAdd(newTodo)
-
-        setForm({todoTitle:""})
-        setError(false)
-    }
-
-     return (
-        <form onSubmit={handleSubmit} className="mt-3 my-4">
-        <div className="input-group">
-            <input
-                type="text"
-                name="todoTitle"
-                className="form-control"
-                placeholder="Enter todo"
-                value={form.todoTitle}
-                onChange={handleChange}
-            />
-            <button className="btn btn-success" type="submit">
-            Add
-            </button>
-
-        </div>
-            {error && <p className="text-danger">you should fill in smth</p>}
-
-        </form>
-    )
+  return (
+    <form onSubmit={handleSubmit} className="mt-3 my-4">
+      <div className="input-group">
+        <input
+          type="text"
+          name="todoTitle"
+          className="form-control"
+          placeholder="Enter todo"
+          value={form.todoTitle}
+          onChange={handleChange}
+        />
+        <button className="btn btn-success" type="submit">
+          Add
+        </button>
+      </div>
+      {error && <p className="text-danger">you should fill in smth</p>}
+    </form>
+  );
 }
